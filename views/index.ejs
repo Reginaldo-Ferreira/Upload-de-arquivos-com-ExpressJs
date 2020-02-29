@@ -1,0 +1,56 @@
+<%- include ("partials/header.ejs") %>
+<div class="container">
+<h1>Form Upload</h1>
+
+<form id="#formulario" method="post" enctype="multipart/form-data" >
+	<!--input type="file" name="file"><input type="submit" value="upload"-->
+
+		<div class="file-field input-field row" >
+			<div class="btn col s2">
+				<span>File</span>
+				<input type="file" name="file ">
+			</div>
+			<div class="file-path-wrapper col s7">
+				<input class="file-path validate" type="text">
+			</div>
+			<button class="btn waves-effect waves-light col s3" type="submit" name="action">Submit
+				<i class="material-icons right">send</i>
+			</button>
+		</div>
+
+		<div class="progress row">
+			<div class="determinate col s12" style="width: 70%"></div>
+		</div>
+</form>
+</div>
+<script>
+form = document.getElementById("#formulario");
+form.onsubmit = function() {
+    var formData = new FormData(this);
+	const xhr = new XMLHttpRequest();
+
+	xhr.open('post', '/upload') // path da rota no servidor
+	
+	xhr.onerror =() => {console.log('erro ao se conectar com o servidor')};
+	
+	 xhr.onload = event => {
+      // o envio ocorreu com sucesso
+	  console.log('---------------');
+      console.log(event);
+	  console.log('---------------');
+    }
+	if (xhr.upload) {
+      // caso tenhamos acesso a esta informação
+      xhr.upload.onprogress = progress => {
+        console.log(Math.round((progress.loaded * 100) / progress.total) + '%')
+      }
+    } else {
+      // tratamento em navegadores que não suportam xhr.upload
+    }
+	
+	
+	xhr.send(formData) // iniciando a requisição, enviando o FormData
+};
+</script>
+
+<%- include ("partials/footer.ejs") %>
