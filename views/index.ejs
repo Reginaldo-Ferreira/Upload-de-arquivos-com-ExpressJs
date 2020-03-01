@@ -1,31 +1,32 @@
 <%- include ("partials/header.ejs") %>
 <div class="container">
 <h1>Form Upload</h1>
-
-<form id="#formulario" method="post" enctype="multipart/form-data" >
-	<!--input type="file" name="file"><input type="submit" value="upload"-->
+<form method="post" enctype="multipart/form-data" action="/upload" id="formulario" >
+	<!--input type="file" name="file"><input type="submit" value="upload"   button--name="action" -->
 
 		<div class="file-field input-field row" >
 			<div class="btn col s2">
 				<span>File</span>
-				<input type="file" name="file ">
+				<input type="file" name="file">
 			</div>
 			<div class="file-path-wrapper col s7">
 				<input class="file-path validate" type="text">
 			</div>
-			<button class="btn waves-effect waves-light col s3" type="submit" name="action">Submit
+			<button class="btn waves-effect waves-light col s3" type="submit" value="upload" >Submit
 				<i class="material-icons right">send</i>
 			</button>
 		</div>
 
 		<div class="progress row">
-			<div class="determinate col s12" style="width: 70%"></div>
+			<div id="progressBar" class="determinate col s12" style="width: 0%"></div>
 		</div>
 </form>
 </div>
 <script>
-form = document.getElementById("#formulario");
-form.onsubmit = function() {
+form = document.getElementById("formulario");
+ progressBar = document.getElementById("progressBar");
+form.onsubmit = function(){
+alert("inicio");
     var formData = new FormData(this);
 	const xhr = new XMLHttpRequest();
 
@@ -36,13 +37,15 @@ form.onsubmit = function() {
 	 xhr.onload = event => {
       // o envio ocorreu com sucesso
 	  console.log('---------------');
-      console.log(event);
+     // console.log(event);
 	  console.log('---------------');
     }
 	if (xhr.upload) {
       // caso tenhamos acesso a esta informação
       xhr.upload.onprogress = progress => {
-        console.log(Math.round((progress.loaded * 100) / progress.total) + '%')
+
+	  let contagem = Math.round((progress.loaded * 100) / progress.total) + '%';
+	  progressBar.style.width = contagem; // mostra contagem no frontEnd
       }
     } else {
       // tratamento em navegadores que não suportam xhr.upload
