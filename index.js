@@ -2,13 +2,24 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const multer = require("multer");
+const path = require("path");
 
 app.set('view engine', 'ejs');
 //Body parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-const upload = multer({dest: "uploads/"}); // não criar o caminho com este formato '/uploads/' caso seja ele irá criar uma pasta na pasta nodemodels
+const storage = multer.diskStorage({
+	destination: function(req, file, cb){
+		cb(null,"uploads/");
+	},
+	filename: function(req, file, cb){
+		// para salvar com o nome original [file.original.name]
+		cb(null, file.originalname + Date.now() + path.extname(file.originalname ));
+	}
+});
+
+const upload = multer({storage}); // não criar o caminho com este formato '/uploads/' caso seja ele irá criar uma pasta na pasta nodemodels
 
 
 
