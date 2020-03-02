@@ -20,11 +20,16 @@
 		<div class="progress row">
 			<div id="progressBar" class="determinate col s12" style="width: 0%"></div>
 		</div>
+		<div class="progress blue lighten-4 " data-position="top" data-tooltip="Progress was at 50% when tested">
+			<span>Percentage<i class="material-icons">info_outline</i></span>
+			<div id="progressBar2" class="determinate blue" style="width: 00%; animation: grow 2s;">00%</div>
+		</div>
 </form>
 </div>
 <script>
 form = document.getElementById("formulario");
  progressBar = document.getElementById("progressBar");
+ progressBar2 = document.getElementById("progressBar2");
 form.onsubmit = function(){
 alert("inicio");
     var formData = new FormData(this);
@@ -46,6 +51,8 @@ alert("inicio");
 
 	  let contagem = Math.round((progress.loaded * 100) / progress.total) + '%';
 	  progressBar.style.width = contagem; // mostra contagem no frontEnd
+	  progressBar2.style.width = contagem; // mostra contagem no frontEnd
+	  progressBar2.innerHTML =contagem;
       }
     } else {
       // tratamento em navegadores que não suportam xhr.upload
