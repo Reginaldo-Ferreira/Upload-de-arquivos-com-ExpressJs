@@ -27,12 +27,22 @@
 </form>
 </div>
 <script>
+
+//this.addEventListener("click", function(event){
+//  event.preventDefault()
+//});
+
 form = document.getElementById("formulario");
+//cancelar o submit para execultar pela programação ajax
+
+
  progressBar = document.getElementById("progressBar");
  progressBar2 = document.getElementById("progressBar2");
+ 
 form.onsubmit = function(){
+
 alert("inicio");
-    var formData = new FormData(this);
+    var formData = new FormData();
 	const xhr = new XMLHttpRequest();
 
 	xhr.open('post', '/upload') // path da rota no servidor

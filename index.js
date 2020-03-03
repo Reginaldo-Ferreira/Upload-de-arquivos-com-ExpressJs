@@ -19,8 +19,10 @@ const storage = multer.diskStorage({
 	}
 });
 
-const upload = multer({storage}); // não criar o caminho com este formato '/uploads/' caso seja ele irá criar uma pasta na pasta nodemodels
-
+const upload = multer({
+	storage}); // não criar o caminho com este formato '/uploads/' caso seja ele irá criar uma pasta na pasta nodemodels
+	
+// const upload = multer({storage}).single('file'); poderia ser dessa forma.
 
 
 const port = 8080;
